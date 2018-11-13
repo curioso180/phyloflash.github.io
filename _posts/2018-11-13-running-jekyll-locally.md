@@ -4,8 +4,6 @@ title: Running Jekyll locally
 comments: true
 ---
 
-# Setting up the gemfile
-
 So, I had to see that to run the Jekyll locally, it is necessary to add a `Gemfile`
 
 So, add this to your `Gemfile` in the root folder of your repository.
