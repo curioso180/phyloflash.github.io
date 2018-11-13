@@ -3,10 +3,44 @@
 <generator uri="http://jekyllrb.com" version="3.7.4">Jekyll</generator>
 <link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" />
 <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-<updated>2018-11-13T11:07:00+09:00</updated>
+<updated>2018-11-13T13:24:46+09:00</updated>
 <id>http://localhost:4000/</id>
 <title>Phyloflash Blog</title>
 <subtitle>A CS guy who can fix your printer (at a very expensive price)</subtitle>
+<entry>
+<title>Running Jekyll locally</title>
+<link href="http://localhost:4000/running-jekyll-locally/" rel="alternate" type="text/html" title="Running Jekyll locally" />
+<published>2018-11-13T00:00:00+09:00</published>
+<updated>2018-11-13T00:00:00+09:00</updated>
+<id>http://localhost:4000/running-jekyll-locally</id>
+<content type="html" xml:base="http://localhost:4000/running-jekyll-locally/">&lt;p&gt;So, I had to see that to run the Jekyll locally, it is necessary to add a &lt;code class=&quot;highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;So, add this to your &lt;code class=&quot;highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt; in the root folder of your repository.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;source ‘https://rubygems.org’
+gem ‘github-pages’, group: :jekyll_plugins&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So, you can run this command to generate the necessary stuff:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;bundle install&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;And followed by this, to run your website locally:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;bundle exec jekyll serve&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;And, it will promt the URL to access it locally.&lt;/p&gt;
+
+&lt;p&gt;That is it!&lt;/p&gt;
+
+</content>
+<summary>So, I had to see that to run the Jekyll locally, it is necessary to add a Gemfile</summary>
+</entry>
 <entry>
 <title>You’re up and running!</title>
 <link href="http://localhost:4000/Hello-World/" rel="alternate" type="text/html" title="You're up and running!" />
