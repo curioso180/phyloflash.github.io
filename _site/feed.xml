@@ -3,10 +3,97 @@
 <generator uri="http://jekyllrb.com" version="3.7.4">Jekyll</generator>
 <link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" />
 <link href="http://localhost:4000/" rel="alternate" type="text/html" />
-<updated>2018-11-13T13:35:24+09:00</updated>
+<updated>2018-11-13T16:00:50+09:00</updated>
 <id>http://localhost:4000/</id>
 <title>Phyloflash Blog</title>
 <subtitle>A CS guy who can fix your printer (at a very expensive price)</subtitle>
+<entry>
+<title>Structs in C</title>
+<link href="http://localhost:4000/structs-in-c/" rel="alternate" type="text/html" title="Structs in C" />
+<published>2018-11-13T00:00:00+09:00</published>
+<updated>2018-11-13T00:00:00+09:00</updated>
+<id>http://localhost:4000/structs-in-c</id>
+<content type="html" xml:base="http://localhost:4000/structs-in-c/">&lt;p&gt;Structs are widely used in C because it provides an “abstraction” type
+for the programmer, trying to mimic what Object-Oriented-Programming
+languages does.&lt;/p&gt;
+
+&lt;p&gt;Let’s start with some struct definition.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdint.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sensor_data&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint16_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint16_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;humidity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint16_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;brightness&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We could create this same data structure as a simple array, like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdint.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define TEMPERATURE (0)
+#define HUMIDITY (1)
+#define BRIGHTNESS (2)
+&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define SIZE (3)
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;uint16_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sensor_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;sensor_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TEMPERATURE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is much ugglier than using structures, beause we would need to know exactly each position what it means and etc… so, lets make it beautiful and simple.&lt;/p&gt;
+
+&lt;p&gt;To initialize strucutres, there are some nice ways to do that. We can initialize as if it is an arrray, or assigning by calling explicitly each one of the struct’s field, like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdint.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sensor_data&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;123&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;humidity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;456&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;brightness&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;789&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;unions-in-c&quot;&gt;Unions in C&lt;/h2&gt;
+
+&lt;p&gt;This is a pretty close friend of &lt;code class=&quot;highlighter-rouge&quot;&gt;struct&lt;/code&gt;, but its behavior in memory is a bit different.&lt;/p&gt;
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdint.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;union&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sensor_data&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint16_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint16_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;humidity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;uint16_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;brightness&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Unlike in &lt;code class=&quot;highlighter-rouge&quot;&gt;struct&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;union&lt;/code&gt; does not arrange the data linearly in memory, but they are all located in the same address.&lt;/p&gt;
+
+&lt;p&gt;To give a better idea, if a &lt;code class=&quot;highlighter-rouge&quot;&gt;struct sensor_data&lt;/code&gt; is initialized at &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0100&lt;/code&gt;, then the &lt;code class=&quot;highlighter-rouge&quot;&gt;temperature&lt;/code&gt; is located at &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0100&lt;/code&gt;, humidity is located at &lt;code class=&quot;highlighter-rouge&quot;&gt;0x01010&lt;/code&gt;, and brightness at &lt;code class=&quot;highlighter-rouge&quot;&gt;0x020&lt;/code&gt;. However, &lt;code class=&quot;highlighter-rouge&quot;&gt;union&lt;/code&gt; uses the same address region, so the members of a &lt;code class=&quot;highlighter-rouge&quot;&gt;union&lt;/code&gt; acts just as aliases to the hsame address. So, temperature, humidity, and brightness will be all pointing to the same address, which is &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0100&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;One interesting thing about &lt;code class=&quot;highlighter-rouge&quot;&gt;union&lt;/code&gt; is that it does not need to have all data types the same size. Keep in mind that &lt;strong&gt;the size of an &lt;code class=&quot;highlighter-rouge&quot;&gt;union&lt;/code&gt; will be equal to the biggest field’s size&lt;/strong&gt;. So, if the other data types are smaller, it will simply be truncated.&lt;/p&gt;
+
+&lt;p&gt;I will stop here. This may help someone out there.&lt;/p&gt;
+
+&lt;h3 id=&quot;disclaimer&quot;&gt;Disclaimer&lt;/h3&gt;
+
+&lt;p&gt;I just downloaded the &lt;a href=&quot;https://remarkableapp.github.io/linux/download.html&quot;&gt;Remarkable&lt;/a&gt; &lt;strong&gt;md&lt;/strong&gt; editor to see live modifications of the files, that is nice and I really recommend it.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;p&gt;[1] &lt;a href=&quot;https://hackaday.com/2018/03/02/unionize-your-variables-an-introduction-to-advanced-data-types-in-c/&quot;&gt;Unionize your variables: an introduction to advanced data types in c&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;[2] &lt;a href=&quot;https://remarkableapp.github.io/linux/download.html&quot;&gt;Remarkable&lt;/a&gt;&lt;/p&gt;
+</content>
+<summary>Structs are widely used in C because it provides an “abstraction” typefor the programmer, trying to mimic what Object-Oriented-Programminglanguages does.</summary>
+</entry>
 <entry>
 <title>Running Jekyll locally</title>
 <link href="http://localhost:4000/running-jekyll-locally/" rel="alternate" type="text/html" title="Running Jekyll locally" />
@@ -40,19 +127,5 @@ gem ‘github-pages’, group: :jekyll_plugins&lt;/p&gt;
 
 </content>
 <summary>So, I had to see that to run the Jekyll locally, it is necessary to add a Gemfile</summary>
-</entry>
-<entry>
-<title>You’re up and running!</title>
-<link href="http://localhost:4000/Hello-World/" rel="alternate" type="text/html" title="You're up and running!" />
-<published>2014-03-03T00:00:00+09:00</published>
-<updated>2014-03-03T00:00:00+09:00</updated>
-<id>http://localhost:4000/Hello-World</id>
-<content type="html" xml:base="http://localhost:4000/Hello-World/">&lt;p&gt;Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;{{ site.baseurl }}/images/config.png&quot; alt=&quot;_config.yml&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the &lt;a href=&quot;https://github.com/barryclark/jekyll-now&quot;&gt;Jekyll Now repository&lt;/a&gt; on GitHub.&lt;/p&gt;
-</content>
-<summary>Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).</summary>
 </entry>
 </feed>

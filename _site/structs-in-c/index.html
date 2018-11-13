@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Structs in C – Phyloflash Blog – A CS guy who can fix your printer (at a very expensive price)</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="Structs are widely used in C because it provides an “abstraction” type
+for the programmer, trying to mimic what Object-Oriented-Programming
+languages does.
+
+" />
+    <meta property="og:description" content="Structs are widely used in C because it provides an “abstraction” type
+for the programmer, trying to mimic what Object-Oriented-Programming
+languages does.
+
+" />
+    
+    <meta name="author" content="Phyloflash Blog" />
+
+    
+    <meta property="og:title" content="Structs in C" />
+    <meta property="twitter:title" content="Structs in C" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Phyloflash Blog - A CS guy who can fix your printer (at a very expensive price)" href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://s.gravatar.com/avatar/4f922da07fe6214c88a5f4e9ff0f1a38?s=80" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Phyloflash Blog</a></h1>
+            <p class="site-description">A CS guy who can fix your printer (at a very expensive price)</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Structs in C</h1>
+
+  <div class="entry">
+    <p>Structs are widely used in C because it provides an “abstraction” type
+for the programmer, trying to mimic what Object-Oriented-Programming
+languages does.</p>
+
+<p>Let’s start with some struct definition.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">#include &lt;stdint.h&gt;
+</span>
+<span class="k">struct</span> <span class="n">sensor_data</span> <span class="p">{</span>
+    <span class="kt">uint16_t</span> <span class="n">temperature</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">humidity</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">brightness</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<p>We could create this same data structure as a simple array, like this:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">#include &lt;stdint.h&gt;
+</span>
+<span class="cp">#define TEMPERATURE (0)
+#define HUMIDITY (1)
+#define BRIGHTNESS (2)
+</span>
+<span class="cp">#define SIZE (3)
+</span>
+<span class="kt">uint16_t</span> <span class="n">sensor_data</span><span class="p">[</span><span class="n">SIZE</span><span class="p">];</span>
+
+<span class="p">...</span>
+
+<span class="n">sensor_data</span><span class="p">[</span><span class="n">TEMPERATURE</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_temperature</span><span class="p">();</span>
+
+</code></pre></div></div>
+
+<p>This is much ugglier than using structures, beause we would need to know exactly each position what it means and etc… so, lets make it beautiful and simple.</p>
+
+<p>To initialize strucutres, there are some nice ways to do that. We can initialize as if it is an arrray, or assigning by calling explicitly each one of the struct’s field, like this:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">#include &lt;stdint.h&gt;
+</span>
+<span class="k">struct</span> <span class="n">sensor_data</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+    <span class="p">.</span><span class="n">humidity</span> <span class="o">=</span> <span class="mi">456</span><span class="p">;</span>
+    <span class="p">.</span><span class="n">brightness</span> <span class="o">=</span> <span class="mi">789</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="unions-in-c">Unions in C</h2>
+
+<p>This is a pretty close friend of <code class="highlighter-rouge">struct</code>, but its behavior in memory is a bit different.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">#include &lt;stdint.h&gt;
+</span>
+<span class="k">union</span> <span class="n">sensor_data</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="kt">uint16_t</span> <span class="n">temperature</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">humidity</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">brightness</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Unlike in <code class="highlighter-rouge">struct</code>, <code class="highlighter-rouge">union</code> does not arrange the data linearly in memory, but they are all located in the same address.</p>
+
+<p>To give a better idea, if a <code class="highlighter-rouge">struct sensor_data</code> is initialized at <code class="highlighter-rouge">0x0100</code>, then the <code class="highlighter-rouge">temperature</code> is located at <code class="highlighter-rouge">0x0100</code>, humidity is located at <code class="highlighter-rouge">0x01010</code>, and brightness at <code class="highlighter-rouge">0x020</code>. However, <code class="highlighter-rouge">union</code> uses the same address region, so the members of a <code class="highlighter-rouge">union</code> acts just as aliases to the hsame address. So, temperature, humidity, and brightness will be all pointing to the same address, which is <code class="highlighter-rouge">0x0100</code>.</p>
+
+<p>One interesting thing about <code class="highlighter-rouge">union</code> is that it does not need to have all data types the same size. Keep in mind that <strong>the size of an <code class="highlighter-rouge">union</code> will be equal to the biggest field’s size</strong>. So, if the other data types are smaller, it will simply be truncated.</p>
+
+<p>I will stop here. This may help someone out there.</p>
+
+<h3 id="disclaimer">Disclaimer</h3>
+
+<p>I just downloaded the <a href="https://remarkableapp.github.io/linux/download.html">Remarkable</a> <strong>md</strong> editor to see live modifications of the files, that is nice and I really recommend it.</p>
+
+<h2 id="references">References</h2>
+
+<p>[1] <a href="https://hackaday.com/2018/03/02/unionize-your-variables-an-introduction-to-advanced-data-types-in-c/">Unionize your variables: an introduction to advanced data types in c</a></p>
+
+<p>[2] <a href="https://remarkableapp.github.io/linux/download.html">Remarkable</a></p>
+
+  </div>
+
+  <div class="date">
+    Written on November 13, 2018
+  </div>
+
+  
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://phylofash.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:cassianocampes@gmail.com"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/phyloflash"><i class="svg-icon github"></i></a>
+<a href="https://instagram.com/thephyloflash"><i class="svg-icon instagram"></i></a>
+<a href="https://www.linkedin.com/in/cassianocampes"><i class="svg-icon linkedin"></i></a>
+
+
+<a href="https://www.twitter.com/phyloflash"><i class="svg-icon twitter"></i></a>
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
